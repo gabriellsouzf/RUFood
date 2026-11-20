@@ -2,7 +2,12 @@ package br.ufjf.rufood;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.JOptionPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Main {
 
@@ -16,12 +21,42 @@ public class Main {
         janela.setLocationRelativeTo(null);
 
         JLabel titulo = new JLabel("Bem-vindo ao RUFood!");
-
         titulo.setHorizontalAlignment(SwingConstants.CENTER);
 
-        janela.add(titulo);
+        JButton botaoCliente = new JButton("Cliente");
+        JButton botaoRestaurante = new JButton("Restaurante");
+        JButton botaoMotoboy = new JButton("Motoboy");
+
+        JPanel painel = new JPanel();
+
+        painel.add(botaoCliente);
+        painel.add(botaoRestaurante);
+        painel.add(botaoMotoboy);
+
+        janela.add(titulo, "North");
+        janela.add(painel, "Center");
 
         janela.setVisible(true);
 
+        // BOTÃO CLIENTE
+        botaoCliente.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                 JOptionPane.showMessageDialog(janela, "Você selecionou Cliente!");
+            }
+        });
+
+        // BOTÃO RESTAURANTE
+        botaoRestaurante.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(janela, "Você selecionou Restaurante!");
+            }
+        });
+
+        // BOTÃO MOTOBOY
+        botaoMotoboy.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(janela, "Você selecionou Motoboy!");
+            }
+        });
     }
 }

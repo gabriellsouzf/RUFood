@@ -64,13 +64,16 @@ public class Main {
 
     String nome = JOptionPane.showInputDialog("Digite seu nome:");
 
-    if (nome == null || nome.isEmpty()) {
-        return;
-    }
+    if (!validarNome(nome)) {
+    JOptionPane.showMessageDialog(null, "Nome inválido!");
+    return;
+}
+    nome = nome.trim();
 
     String email = JOptionPane.showInputDialog("Digite seu e-mail:");
 
-    if (email == null || email.isEmpty()) {
+    if (!validarEmail(email)) {
+        JOptionPane.showMessageDialog(null, "E-mail inválido!");
         return;
     }
 
@@ -91,13 +94,17 @@ private static void cadastrarRestaurante() {
 
     String nome = JOptionPane.showInputDialog("Digite o nome do restaurante:");
 
-    if (nome == null || nome.isEmpty()) {
-        return;
-    }
+    if (!validarNome(nome)) {
+    JOptionPane.showMessageDialog(null, "Nome inválido!");
+    return;
+}
+
+    nome = nome.trim();
 
     String email = JOptionPane.showInputDialog("Digite o e-mail:");
 
-    if (email == null || email.isEmpty()) {
+    if (!validarEmail(email)) {
+        JOptionPane.showMessageDialog(null, "E-mail inválido!");
         return;
     }
 
@@ -120,13 +127,16 @@ private static void cadastrarMotoboy() {
 
     String nome = JOptionPane.showInputDialog("Digite seu nome:");
 
-    if (nome == null || nome.isEmpty()) {
-        return;
-    }
+    if (!validarNome(nome)) {
+    JOptionPane.showMessageDialog(null, "Nome inválido!");
+    return;
+}
+    nome = nome.trim();
 
     String email = JOptionPane.showInputDialog("Digite seu e-mail:");
 
-    if (email == null || email.isEmpty()) {
+    if (!validarEmail(email)) {
+        JOptionPane.showMessageDialog(null, "E-mail inválido!");
         return;
     }
 
@@ -142,6 +152,16 @@ private static void cadastrarMotoboy() {
             "Motoboy cadastrado com sucesso!\n\n" +
             "Nome: " + motoboy.getNome() +
             "\nE-mail: " + motoboy.getEmail());
+}
+
+//Valida nome
+private static boolean validarNome(String nome) {
+    return nome != null && nome.trim().length() >= 2;
+}
+
+//Valida e-mail
+private static boolean validarEmail(String email) {
+    return email != null && email.contains("@") && email.contains(".");
 }
 }
 

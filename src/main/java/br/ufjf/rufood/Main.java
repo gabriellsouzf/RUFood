@@ -48,14 +48,14 @@ public class Main {
         // BOTÃO RESTAURANTE
         botaoRestaurante.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(janela, "Você selecionou Restaurante!");
+                cadastrarRestaurante();
             }
         });
 
         // BOTÃO MOTOBOY
         botaoMotoboy.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(janela, "Você selecionou Motoboy!");
+                cadastrarMotoboy();
             }
         });
     }
@@ -87,4 +87,61 @@ public class Main {
             "Nome: " + cliente.getNome() +
             "\nE-mail: " + cliente.getEmail());
 }
+private static void cadastrarRestaurante() {
+
+    String nome = JOptionPane.showInputDialog("Digite o nome do restaurante:");
+
+    if (nome == null || nome.isEmpty()) {
+        return;
+    }
+
+    String email = JOptionPane.showInputDialog("Digite o e-mail:");
+
+    if (email == null || email.isEmpty()) {
+        return;
+    }
+
+    String senha = JOptionPane.showInputDialog("Digite a senha:");
+
+    if (senha == null || senha.isEmpty()) {
+        return;
+    }
+
+    Restaurante restaurante = new Restaurante(nome, email, senha);
+
+    JOptionPane.showMessageDialog(null,
+            "Restaurante cadastrado com sucesso!\n\n" +
+            "Nome: " + restaurante.getNome() +
+            "\nE-mail: " + restaurante.getEmail());
 }
+
+//Método para cadastrar motoboy
+private static void cadastrarMotoboy() {
+
+    String nome = JOptionPane.showInputDialog("Digite seu nome:");
+
+    if (nome == null || nome.isEmpty()) {
+        return;
+    }
+
+    String email = JOptionPane.showInputDialog("Digite seu e-mail:");
+
+    if (email == null || email.isEmpty()) {
+        return;
+    }
+
+    String senha = JOptionPane.showInputDialog("Digite sua senha:");
+
+    if (senha == null || senha.isEmpty()) {
+        return;
+    }
+
+    Motoboy motoboy = new Motoboy(nome, email, senha);
+
+    JOptionPane.showMessageDialog(null,
+            "Motoboy cadastrado com sucesso!\n\n" +
+            "Nome: " + motoboy.getNome() +
+            "\nE-mail: " + motoboy.getEmail());
+}
+}
+

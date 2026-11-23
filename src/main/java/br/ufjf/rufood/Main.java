@@ -77,18 +77,21 @@ public class Main {
         return;
     }
 
+    String cpf = JOptionPane.showInputDialog("Digite seu CPF:");
+
     String senha = JOptionPane.showInputDialog("Digite sua senha:");
 
     if (senha == null || senha.isEmpty()) {
         return;
     }
 
-    Cliente cliente = new Cliente(nome, email, senha);
+    Cliente cliente = new Cliente(nome, email, senha, cpf);
 
     JOptionPane.showMessageDialog(null,
             "Cliente cadastrado com sucesso!\n\n" +
             "Nome: " + cliente.getNome() +
-            "\nE-mail: " + cliente.getEmail());
+            "\nE-mail: " + cliente.getEmail() +
+            "\nCPF: " + cliente.getCpf());
 }
 private static void cadastrarRestaurante() {
 
@@ -108,18 +111,21 @@ private static void cadastrarRestaurante() {
         return;
     }
 
+    String cnpj = JOptionPane.showInputDialog("Digite o CNPJ:");
+
     String senha = JOptionPane.showInputDialog("Digite a senha:");
 
     if (senha == null || senha.isEmpty()) {
         return;
     }
 
-    Restaurante restaurante = new Restaurante(nome, email, senha);
+    Restaurante restaurante = new Restaurante(nome, email, senha, cnpj);
 
     JOptionPane.showMessageDialog(null,
             "Restaurante cadastrado com sucesso!\n\n" +
             "Nome: " + restaurante.getNome() +
-            "\nE-mail: " + restaurante.getEmail());
+            "\nE-mail: " + restaurante.getEmail() +
+            "\nCNPJ: " + restaurante.getCnpj());
 }
 
 //Método para cadastrar motoboy
@@ -140,18 +146,21 @@ private static void cadastrarMotoboy() {
         return;
     }
 
+    String cpf = JOptionPane.showInputDialog("Digite seu CPF:");
+
     String senha = JOptionPane.showInputDialog("Digite sua senha:");
 
     if (senha == null || senha.isEmpty()) {
         return;
     }
 
-    Motoboy motoboy = new Motoboy(nome, email, senha);
+    Motoboy motoboy = new Motoboy(nome, email, senha, cpf);
 
     JOptionPane.showMessageDialog(null,
             "Motoboy cadastrado com sucesso!\n\n" +
             "Nome: " + motoboy.getNome() +
-            "\nE-mail: " + motoboy.getEmail());
+            "\nE-mail: " + motoboy.getEmail() +
+            "\nCPF: " + motoboy.getCpf());
 }
 
 //Valida nome

@@ -2,7 +2,14 @@ package br.ufjf.rufood;
 
 public class Cliente extends Usuario {
 
-    public Cliente(String nome, String email, String senha) {
+    private String cpf; 
+
+    public Cliente(String nome, String email, String senha, String cpf) {
         super(nome, email, senha);
+        this.cpf = cpf;
+    }
+
+    public String getCpf() {
+        return cpf;
     }
 }

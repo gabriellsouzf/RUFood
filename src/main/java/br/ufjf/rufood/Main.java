@@ -79,6 +79,11 @@ public class Main {
 
     String cpf = JOptionPane.showInputDialog("Digite seu CPF:");
 
+    if (!validarCpf(cpf)) {
+        JOptionPane.showMessageDialog(null, "CPF inválido!");
+        return;
+    }
+
     String senha = JOptionPane.showInputDialog("Digite sua senha:");
 
     if (senha == null || senha.isEmpty()) {
@@ -112,6 +117,11 @@ private static void cadastrarRestaurante() {
     }
 
     String cnpj = JOptionPane.showInputDialog("Digite o CNPJ:");
+
+    if (!validarCnpj(cnpj)) {
+        JOptionPane.showMessageDialog(null, "CNPJ inválido!");
+        return;
+    }
 
     String senha = JOptionPane.showInputDialog("Digite a senha:");
 
@@ -148,6 +158,11 @@ private static void cadastrarMotoboy() {
 
     String cpf = JOptionPane.showInputDialog("Digite seu CPF:");
 
+    if (!validarCpf(cpf)) {
+        JOptionPane.showMessageDialog(null, "CPF inválido!");
+        return;
+    }
+
     String senha = JOptionPane.showInputDialog("Digite sua senha:");
 
     if (senha == null || senha.isEmpty()) {
@@ -171,6 +186,186 @@ private static boolean validarNome(String nome) {
 //Valida e-mail
 private static boolean validarEmail(String email) {
     return email != null && email.contains("@") && email.contains(".");
+}
+
+private static boolean validarCpf(String cpf) {
+
+    if (cpf == null) {
+        return false;
+    }
+
+    // Remove pontos e traços
+    cpf = cpf.replace(".", "");
+    cpf = cpf.replace("-", "");
+
+    // Verifica se possui 11 dígitos
+    if (cpf.length() != 11) {
+        return false;
+    }
+
+    for (int i = 0; i < 11; i++) {
+
+        char numero = cpf.charAt(i);
+
+        if (numero < '0' || numero > '9') {
+            return false;
+        }
+    }
+
+    boolean todosIguais = true;
+
+    for (int i = 1; i < 11; i++) {
+
+        if (cpf.charAt(i) != cpf.charAt(0)) {
+            todosIguais = false;
+        }
+    }
+
+    if (todosIguais == true) {
+        return false;
+    }
+
+    int soma = 0;
+
+    for (int i = 0; i < 9; i++) {
+
+        int numero = cpf.charAt(i) - '0';
+
+        soma = soma + numero * (10 - i);
+    }
+
+    int resto = soma % 11;
+    int primeiroDigito;
+
+    if (resto < 2) {
+        primeiroDigito = 0;
+    } else {
+        primeiroDigito = 11 - resto;
+    }
+
+    int digitoCpf = cpf.charAt(9) - '0';
+
+    if (primeiroDigito != digitoCpf) {
+        return false;
+    }
+
+    soma = 0;
+
+    for (int i = 0; i < 10; i++) {
+
+        int numero = cpf.charAt(i) - '0';
+
+        soma = soma + numero * (11 - i);
+    }
+
+    resto = soma % 11;
+    int segundoDigito;
+
+    if (resto < 2) {
+        segundoDigito = 0;
+    } else {
+        segundoDigito = 11 - resto;
+    }
+
+    digitoCpf = cpf.charAt(10) - '0';
+
+    if (segundoDigito != digitoCpf) {
+        return false;
+    }
+
+    return true;
+}
+
+//Valida CNPJ
+private static boolean validarCnpj(String cnpj) {
+
+    if (cnpj == null) {
+        return false;
+    }
+
+    cnpj = cnpj.replace(".", "");
+    cnpj = cnpj.replace("-", "");
+    cnpj = cnpj.replace("/", "");
+
+    if (cnpj.length() != 14) {
+        return false;
+    }
+
+    for (int i = 0; i < 14; i++) {
+
+        char numero = cnpj.charAt(i);
+
+        if (numero < '0' || numero > '9') {
+            return false;
+        }
+    }
+
+    boolean todosIguais = true;
+
+    for (int i = 1; i < 14; i++) {
+
+        if (cnpj.charAt(i) != cnpj.charAt(0)) {
+            todosIguais = false;
+        }
+    }
+
+    if (todosIguais == true) {
+        return false;
+    }
+
+    int[] pesos = {5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
+
+    int soma = 0;
+
+    for (int i = 0; i < 12; i++) {
+
+        int numero = cnpj.charAt(i) - '0';
+
+        soma = soma + numero * pesos[i];
+    }
+
+    int resto = soma % 11;
+    int primeiroDigito;
+
+    if (resto < 2) {
+        primeiroDigito = 0;
+    } else {
+        primeiroDigito = 11 - resto;
+    }
+
+    int digitoCnpj = cnpj.charAt(12) - '0';
+
+    if (primeiroDigito != digitoCnpj) {
+        return false;
+    }
+
+    int[] pesos2 = {6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
+
+    soma = 0;
+
+    for (int i = 0; i < 13; i++) {
+
+        int numero = cnpj.charAt(i) - '0';
+
+        soma = soma + numero * pesos2[i];
+    }
+
+    resto = soma % 11;
+    int segundoDigito;
+
+    if (resto < 2) {
+        segundoDigito = 0;
+    } else {
+        segundoDigito = 11 - resto;
+    }
+
+    digitoCnpj = cnpj.charAt(13) - '0';
+
+    if (segundoDigito != digitoCnpj) {
+        return false;
+    }
+
+    return true;
 }
 }
 

@@ -41,7 +41,7 @@ public class Main {
         // BOTÃO CLIENTE
         botaoCliente.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                 JOptionPane.showMessageDialog(janela, "Você selecionou Cliente!");
+                 cadastrarCliente();
             }
         });
 
@@ -59,4 +59,32 @@ public class Main {
             }
         });
     }
+    // Método para cadastrar cliente
+    private static void cadastrarCliente() {
+
+    String nome = JOptionPane.showInputDialog("Digite seu nome:");
+
+    if (nome == null || nome.isEmpty()) {
+        return;
+    }
+
+    String email = JOptionPane.showInputDialog("Digite seu e-mail:");
+
+    if (email == null || email.isEmpty()) {
+        return;
+    }
+
+    String senha = JOptionPane.showInputDialog("Digite sua senha:");
+
+    if (senha == null || senha.isEmpty()) {
+        return;
+    }
+
+    Cliente cliente = new Cliente(nome, email, senha);
+
+    JOptionPane.showMessageDialog(null,
+            "Cliente cadastrado com sucesso!\n\n" +
+            "Nome: " + cliente.getNome() +
+            "\nE-mail: " + cliente.getEmail());
+}
 }

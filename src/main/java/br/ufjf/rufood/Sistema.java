@@ -13,4 +13,18 @@ public class Sistema {
     public void cadastrarUsuario(Usuario usuario) {
         usuarios.add(usuario);
     }
+
+    public boolean emailCadastrado(String email) {
+
+        for (int i = 0; i < usuarios.size(); i++) {
+
+            Usuario usuario = usuarios.get(i);
+
+            if (usuario.getEmail().equals(email)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

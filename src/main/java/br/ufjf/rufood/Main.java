@@ -97,6 +97,11 @@ public class Main {
             return;
         }
 
+        if (sistema.emailCadastrado(email) == true) {
+            JOptionPane.showMessageDialog(null, "E-mail já cadastrado!");
+            return;
+        }
+
         String cpf = JOptionPane.showInputDialog("Digite seu CPF:");
 
         if (validarCpf(cpf) == false) {
@@ -143,10 +148,15 @@ public class Main {
 
         nome = nome.trim();
 
-        String email = JOptionPane.showInputDialog("Digite o e-mail:");
+        String email = JOptionPane.showInputDialog("Digite seu e-mail:");
 
         if (validarEmail(email) == false) {
             JOptionPane.showMessageDialog(null, "E-mail inválido!");
+            return;
+        }
+
+        if (sistema.emailCadastrado(email) == true) {
+            JOptionPane.showMessageDialog(null, "E-mail já cadastrado!");
             return;
         }
 
@@ -200,6 +210,11 @@ public class Main {
 
         if (validarEmail(email) == false) {
             JOptionPane.showMessageDialog(null, "E-mail inválido!");
+            return;
+        }
+
+        if (sistema.emailCadastrado(email) == true) {
+            JOptionPane.showMessageDialog(null, "E-mail já cadastrado!");
             return;
         }
 

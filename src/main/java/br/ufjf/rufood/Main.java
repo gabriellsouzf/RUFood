@@ -1,3 +1,4 @@
+
 package br.ufjf.rufood;
 
 import javax.swing.JFrame;
@@ -11,8 +12,15 @@ import java.awt.event.ActionEvent;
 
 public class Main {
 
+    private static Sistema sistema = new Sistema();
+
+    // =====================================
+    // INTERFACE GRAFICA
+    // =====================================
+
     public static void main(String[] args) {
 
+        // Criacao da janela
         JFrame janela = new JFrame();
 
         janela.setTitle("RUFood");
@@ -20,13 +28,16 @@ public class Main {
         janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         janela.setLocationRelativeTo(null);
 
+        // Criacao do titulo
         JLabel titulo = new JLabel("Bem-vindo ao RUFood!");
         titulo.setHorizontalAlignment(SwingConstants.CENTER);
 
+        // Criacao dos botoes
         JButton botaoCliente = new JButton("Cliente");
         JButton botaoRestaurante = new JButton("Restaurante");
         JButton botaoMotoboy = new JButton("Motoboy");
 
+        // Criacao do painel
         JPanel painel = new JPanel();
 
         painel.add(botaoCliente);
@@ -36,336 +47,450 @@ public class Main {
         janela.add(titulo, "North");
         janela.add(painel, "Center");
 
-        janela.setVisible(true);
-
-        // BOTÃO CLIENTE
+        // Evento do botao Cliente
         botaoCliente.addActionListener(new ActionListener() {
+
             public void actionPerformed(ActionEvent e) {
-                 cadastrarCliente();
+                cadastrarCliente();
             }
         });
 
-        // BOTÃO RESTAURANTE
+        // Evento do botao Restaurante
         botaoRestaurante.addActionListener(new ActionListener() {
+
             public void actionPerformed(ActionEvent e) {
                 cadastrarRestaurante();
             }
         });
 
-        // BOTÃO MOTOBOY
+        // Evento do botao Motoboy
         botaoMotoboy.addActionListener(new ActionListener() {
+
             public void actionPerformed(ActionEvent e) {
                 cadastrarMotoboy();
             }
         });
+
+        // Exibe a janela
+        janela.setVisible(true);
     }
-    // Método para cadastrar cliente
+
+    // =====================================
+    // CADASTRO DE CLIENTE
+    // =====================================
+
     private static void cadastrarCliente() {
 
-    String nome = JOptionPane.showInputDialog("Digite seu nome:");
+        String nome = JOptionPane.showInputDialog("Digite seu nome:");
 
-    if (!validarNome(nome)) {
-    JOptionPane.showMessageDialog(null, "Nome inválido!");
-    return;
-}
-    nome = nome.trim();
+        if (validarNome(nome) == false) {
+            JOptionPane.showMessageDialog(null, "Nome inválido!");
+            return;
+        }
 
-    String email = JOptionPane.showInputDialog("Digite seu e-mail:");
+        nome = nome.trim();
 
-    if (!validarEmail(email)) {
-        JOptionPane.showMessageDialog(null, "E-mail inválido!");
-        return;
+        String email = JOptionPane.showInputDialog("Digite seu e-mail:");
+
+        if (validarEmail(email) == false) {
+            JOptionPane.showMessageDialog(null, "E-mail inválido!");
+            return;
+        }
+
+        String cpf = JOptionPane.showInputDialog("Digite seu CPF:");
+
+        if (validarCpf(cpf) == false) {
+            JOptionPane.showMessageDialog(null, "CPF inválido!");
+            return;
+        }
+
+        String senha = JOptionPane.showInputDialog("Digite sua senha:");
+
+        if (senha == null) {
+            return;
+        }
+
+        if (senha.length() == 0) {
+            return;
+        }
+
+        // Cria o objeto Cliente
+        Cliente cliente = new Cliente(nome, email, senha, cpf);
+
+        // Armazena o cliente no sistema
+        sistema.cadastrarUsuario(cliente);
+
+        // Exibe os dados do cadastro
+        JOptionPane.showMessageDialog(null,
+                "Cliente cadastrado com sucesso!\n\n" +
+                "Nome: " + cliente.getNome() +
+                "\nE-mail: " + cliente.getEmail() +
+                "\nCPF: " + cliente.getCpf());
     }
 
-    String cpf = JOptionPane.showInputDialog("Digite seu CPF:");
+    // =====================================
+    // CADASTRO DE RESTAURANTE
+    // =====================================
 
-    if (!validarCpf(cpf)) {
-        JOptionPane.showMessageDialog(null, "CPF inválido!");
-        return;
+    private static void cadastrarRestaurante() {
+
+        String nome = JOptionPane.showInputDialog("Digite o nome do restaurante:");
+
+        if (validarNome(nome) == false) {
+            JOptionPane.showMessageDialog(null, "Nome inválido!");
+            return;
+        }
+
+        nome = nome.trim();
+
+        String email = JOptionPane.showInputDialog("Digite o e-mail:");
+
+        if (validarEmail(email) == false) {
+            JOptionPane.showMessageDialog(null, "E-mail inválido!");
+            return;
+        }
+
+        String cnpj = JOptionPane.showInputDialog("Digite o CNPJ:");
+
+        if (validarCnpj(cnpj) == false) {
+            JOptionPane.showMessageDialog(null, "CNPJ inválido!");
+            return;
+        }
+
+        String senha = JOptionPane.showInputDialog("Digite a senha:");
+
+        if (senha == null) {
+            return;
+        }
+
+        if (senha.length() == 0) {
+            return;
+        }
+
+        // Cria o objeto Restaurante
+        Restaurante restaurante = new Restaurante(nome, email, senha, cnpj);
+
+        // Armazena o restaurante no sistema
+        sistema.cadastrarUsuario(restaurante);
+
+        // Exibe os dados do cadastro
+        JOptionPane.showMessageDialog(null,
+                "Restaurante cadastrado com sucesso!\n\n" +
+                "Nome: " + restaurante.getNome() +
+                "\nE-mail: " + restaurante.getEmail() +
+                "\nCNPJ: " + restaurante.getCnpj());
     }
 
-    String senha = JOptionPane.showInputDialog("Digite sua senha:");
+    // =====================================
+    // CADASTRO DE MOTOBOY
+    // =====================================
 
-    if (senha == null || senha.isEmpty()) {
-        return;
+    private static void cadastrarMotoboy() {
+
+        String nome = JOptionPane.showInputDialog("Digite seu nome:");
+
+        if (validarNome(nome) == false) {
+            JOptionPane.showMessageDialog(null, "Nome inválido!");
+            return;
+        }
+
+        nome = nome.trim();
+
+        String email = JOptionPane.showInputDialog("Digite seu e-mail:");
+
+        if (validarEmail(email) == false) {
+            JOptionPane.showMessageDialog(null, "E-mail inválido!");
+            return;
+        }
+
+        String cpf = JOptionPane.showInputDialog("Digite seu CPF:");
+
+        if (validarCpf(cpf) == false) {
+            JOptionPane.showMessageDialog(null, "CPF inválido!");
+            return;
+        }
+
+        String senha = JOptionPane.showInputDialog("Digite sua senha:");
+
+        if (senha == null) {
+            return;
+        }
+
+        if (senha.length() == 0) {
+            return;
+        }
+
+        // Cria o objeto Motoboy
+        Motoboy motoboy = new Motoboy(nome, email, senha, cpf);
+
+        // Armazena o motoboy no sistema
+        sistema.cadastrarUsuario(motoboy);
+
+        // Exibe os dados do cadastro
+        JOptionPane.showMessageDialog(null,
+                "Motoboy cadastrado com sucesso!\n\n" +
+                "Nome: " + motoboy.getNome() +
+                "\nE-mail: " + motoboy.getEmail() +
+                "\nCPF: " + motoboy.getCpf());
     }
 
-    Cliente cliente = new Cliente(nome, email, senha, cpf);
+    // =====================================
+    // VALIDACAO DE NOME
+    // =====================================
 
-    JOptionPane.showMessageDialog(null,
-            "Cliente cadastrado com sucesso!\n\n" +
-            "Nome: " + cliente.getNome() +
-            "\nE-mail: " + cliente.getEmail() +
-            "\nCPF: " + cliente.getCpf());
-}
-private static void cadastrarRestaurante() {
+    private static boolean validarNome(String nome) {
 
-    String nome = JOptionPane.showInputDialog("Digite o nome do restaurante:");
-
-    if (!validarNome(nome)) {
-    JOptionPane.showMessageDialog(null, "Nome inválido!");
-    return;
-}
-
-    nome = nome.trim();
-
-    String email = JOptionPane.showInputDialog("Digite o e-mail:");
-
-    if (!validarEmail(email)) {
-        JOptionPane.showMessageDialog(null, "E-mail inválido!");
-        return;
-    }
-
-    String cnpj = JOptionPane.showInputDialog("Digite o CNPJ:");
-
-    if (!validarCnpj(cnpj)) {
-        JOptionPane.showMessageDialog(null, "CNPJ inválido!");
-        return;
-    }
-
-    String senha = JOptionPane.showInputDialog("Digite a senha:");
-
-    if (senha == null || senha.isEmpty()) {
-        return;
-    }
-
-    Restaurante restaurante = new Restaurante(nome, email, senha, cnpj);
-
-    JOptionPane.showMessageDialog(null,
-            "Restaurante cadastrado com sucesso!\n\n" +
-            "Nome: " + restaurante.getNome() +
-            "\nE-mail: " + restaurante.getEmail() +
-            "\nCNPJ: " + restaurante.getCnpj());
-}
-
-//Método para cadastrar motoboy
-private static void cadastrarMotoboy() {
-
-    String nome = JOptionPane.showInputDialog("Digite seu nome:");
-
-    if (!validarNome(nome)) {
-    JOptionPane.showMessageDialog(null, "Nome inválido!");
-    return;
-}
-    nome = nome.trim();
-
-    String email = JOptionPane.showInputDialog("Digite seu e-mail:");
-
-    if (!validarEmail(email)) {
-        JOptionPane.showMessageDialog(null, "E-mail inválido!");
-        return;
-    }
-
-    String cpf = JOptionPane.showInputDialog("Digite seu CPF:");
-
-    if (!validarCpf(cpf)) {
-        JOptionPane.showMessageDialog(null, "CPF inválido!");
-        return;
-    }
-
-    String senha = JOptionPane.showInputDialog("Digite sua senha:");
-
-    if (senha == null || senha.isEmpty()) {
-        return;
-    }
-
-    Motoboy motoboy = new Motoboy(nome, email, senha, cpf);
-
-    JOptionPane.showMessageDialog(null,
-            "Motoboy cadastrado com sucesso!\n\n" +
-            "Nome: " + motoboy.getNome() +
-            "\nE-mail: " + motoboy.getEmail() +
-            "\nCPF: " + motoboy.getCpf());
-}
-
-//Valida nome
-private static boolean validarNome(String nome) {
-    return nome != null && nome.trim().length() >= 2;
-}
-
-//Valida e-mail
-private static boolean validarEmail(String email) {
-    return email != null && email.contains("@") && email.contains(".");
-}
-
-private static boolean validarCpf(String cpf) {
-
-    if (cpf == null) {
-        return false;
-    }
-
-    // Remove pontos e traços
-    cpf = cpf.replace(".", "");
-    cpf = cpf.replace("-", "");
-
-    // Verifica se possui 11 dígitos
-    if (cpf.length() != 11) {
-        return false;
-    }
-
-    for (int i = 0; i < 11; i++) {
-
-        char numero = cpf.charAt(i);
-
-        if (numero < '0' || numero > '9') {
+        // Verifica se o usuario cancelou
+        if (nome == null) {
             return false;
         }
-    }
 
-    boolean todosIguais = true;
+        // Remove espacos do inicio e do final
+        nome = nome.trim();
 
-    for (int i = 1; i < 11; i++) {
-
-        if (cpf.charAt(i) != cpf.charAt(0)) {
-            todosIguais = false;
-        }
-    }
-
-    if (todosIguais == true) {
-        return false;
-    }
-
-    int soma = 0;
-
-    for (int i = 0; i < 9; i++) {
-
-        int numero = cpf.charAt(i) - '0';
-
-        soma = soma + numero * (10 - i);
-    }
-
-    int resto = soma % 11;
-    int primeiroDigito;
-
-    if (resto < 2) {
-        primeiroDigito = 0;
-    } else {
-        primeiroDigito = 11 - resto;
-    }
-
-    int digitoCpf = cpf.charAt(9) - '0';
-
-    if (primeiroDigito != digitoCpf) {
-        return false;
-    }
-
-    soma = 0;
-
-    for (int i = 0; i < 10; i++) {
-
-        int numero = cpf.charAt(i) - '0';
-
-        soma = soma + numero * (11 - i);
-    }
-
-    resto = soma % 11;
-    int segundoDigito;
-
-    if (resto < 2) {
-        segundoDigito = 0;
-    } else {
-        segundoDigito = 11 - resto;
-    }
-
-    digitoCpf = cpf.charAt(10) - '0';
-
-    if (segundoDigito != digitoCpf) {
-        return false;
-    }
-
-    return true;
-}
-
-//Valida CNPJ
-private static boolean validarCnpj(String cnpj) {
-
-    if (cnpj == null) {
-        return false;
-    }
-
-    cnpj = cnpj.replace(".", "");
-    cnpj = cnpj.replace("-", "");
-    cnpj = cnpj.replace("/", "");
-
-    if (cnpj.length() != 14) {
-        return false;
-    }
-
-    for (int i = 0; i < 14; i++) {
-
-        char numero = cnpj.charAt(i);
-
-        if (numero < '0' || numero > '9') {
+        // Verifica a quantidade de caracteres
+        if (nome.length() < 2) {
             return false;
         }
+
+        return true;
     }
 
-    boolean todosIguais = true;
+    // =====================================
+    // VALIDACAO DE E-MAIL
+    // =====================================
 
-    for (int i = 1; i < 14; i++) {
+    private static boolean validarEmail(String email) {
 
-        if (cnpj.charAt(i) != cnpj.charAt(0)) {
-            todosIguais = false;
+        // Verifica se o usuario cancelou
+        if (email == null) {
+            return false;
         }
+
+        // Verifica se possui arroba
+        if (email.contains("@") == false) {
+            return false;
+        }
+
+        // Verifica se possui ponto
+        if (email.contains(".") == false) {
+            return false;
+        }
+
+        return true;
     }
 
-    if (todosIguais == true) {
-        return false;
+    // =====================================
+    // VALIDACAO DE CPF
+    // =====================================
+
+    private static boolean validarCpf(String cpf) {
+
+        if (cpf == null) {
+            return false;
+        }
+
+        // Remove pontos e tracos
+        cpf = cpf.replace(".", "");
+        cpf = cpf.replace("-", "");
+
+        // Verifica se possui 11 caracteres
+        if (cpf.length() != 11) {
+            return false;
+        }
+
+        // Verifica se todos os caracteres sao numeros
+        for (int i = 0; i < 11; i++) {
+
+            char numero = cpf.charAt(i);
+
+            if (numero < '0') {
+                return false;
+            }
+
+            if (numero > '9') {
+                return false;
+            }
+        }
+
+        // Verifica se todos os numeros sao iguais
+        boolean todosIguais = true;
+
+        for (int i = 1; i < 11; i++) {
+
+            if (cpf.charAt(i) != cpf.charAt(0)) {
+                todosIguais = false;
+            }
+        }
+
+        if (todosIguais == true) {
+            return false;
+        }
+
+        // Calcula o primeiro digito verificador
+        int soma = 0;
+
+        for (int i = 0; i < 9; i++) {
+
+            int numero = cpf.charAt(i) - '0';
+
+            soma = soma + numero * (10 - i);
+        }
+
+        int resto = soma % 11;
+        int primeiroDigito;
+
+        if (resto < 2) {
+            primeiroDigito = 0;
+        } else {
+            primeiroDigito = 11 - resto;
+        }
+
+        // Compara com o primeiro digito do CPF
+        int digitoCpf = cpf.charAt(9) - '0';
+
+        if (primeiroDigito != digitoCpf) {
+            return false;
+        }
+
+        // Calcula o segundo digito verificador
+        soma = 0;
+
+        for (int i = 0; i < 10; i++) {
+
+            int numero = cpf.charAt(i) - '0';
+
+            soma = soma + numero * (11 - i);
+        }
+
+        resto = soma % 11;
+
+        int segundoDigito;
+
+        if (resto < 2) {
+            segundoDigito = 0;
+        } else {
+            segundoDigito = 11 - resto;
+        }
+
+        // Compara com o segundo digito do CPF
+        digitoCpf = cpf.charAt(10) - '0';
+
+        if (segundoDigito != digitoCpf) {
+            return false;
+        }
+
+        return true;
     }
 
-    int[] pesos = {5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
+    // =====================================
+    // VALIDACAO DE CNPJ
+    // =====================================
 
-    int soma = 0;
+    private static boolean validarCnpj(String cnpj) {
 
-    for (int i = 0; i < 12; i++) {
+        if (cnpj == null) {
+            return false;
+        }
 
-        int numero = cnpj.charAt(i) - '0';
+        // Remove pontos, tracos e barras
+        cnpj = cnpj.replace(".", "");
+        cnpj = cnpj.replace("-", "");
+        cnpj = cnpj.replace("/", "");
 
-        soma = soma + numero * pesos[i];
+        // Verifica se possui 14 caracteres
+        if (cnpj.length() != 14) {
+            return false;
+        }
+
+        // Verifica se todos os caracteres sao numeros
+        for (int i = 0; i < 14; i++) {
+
+            char numero = cnpj.charAt(i);
+
+            if (numero < '0') {
+                return false;
+            }
+
+            if (numero > '9') {
+                return false;
+            }
+        }
+
+        // Verifica se todos os numeros sao iguais
+        boolean todosIguais = true;
+
+        for (int i = 1; i < 14; i++) {
+
+            if (cnpj.charAt(i) != cnpj.charAt(0)) {
+                todosIguais = false;
+            }
+        }
+
+        if (todosIguais == true) {
+            return false;
+        }
+
+        // Pesos utilizados no primeiro digito
+        int[] pesos = {5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
+
+        // Calcula o primeiro digito verificador
+        int soma = 0;
+
+        for (int i = 0; i < 12; i++) {
+
+            int numero = cnpj.charAt(i) - '0';
+
+            soma = soma + numero * pesos[i];
+        }
+
+        int resto = soma % 11;
+        int primeiroDigito;
+
+        if (resto < 2) {
+            primeiroDigito = 0;
+        } else {
+            primeiroDigito = 11 - resto;
+        }
+
+        // Compara com o primeiro digito do CNPJ
+        int digitoCnpj = cnpj.charAt(12) - '0';
+
+        if (primeiroDigito != digitoCnpj) {
+            return false;
+        }
+
+        // Pesos utilizados no segundo digito
+        int[] pesos2 = {6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
+
+        // Calcula o segundo digito verificador
+        soma = 0;
+
+        for (int i = 0; i < 13; i++) {
+
+            int numero = cnpj.charAt(i) - '0';
+
+            soma = soma + numero * pesos2[i];
+        }
+
+        resto = soma % 11;
+
+        int segundoDigito;
+
+        if (resto < 2) {
+            segundoDigito = 0;
+        } else {
+            segundoDigito = 11 - resto;
+        }
+
+        // Compara com o segundo digito do CNPJ
+        digitoCnpj = cnpj.charAt(13) - '0';
+
+        if (segundoDigito != digitoCnpj) {
+            return false;
+        }
+
+        return true;
     }
-
-    int resto = soma % 11;
-    int primeiroDigito;
-
-    if (resto < 2) {
-        primeiroDigito = 0;
-    } else {
-        primeiroDigito = 11 - resto;
-    }
-
-    int digitoCnpj = cnpj.charAt(12) - '0';
-
-    if (primeiroDigito != digitoCnpj) {
-        return false;
-    }
-
-    int[] pesos2 = {6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
-
-    soma = 0;
-
-    for (int i = 0; i < 13; i++) {
-
-        int numero = cnpj.charAt(i) - '0';
-
-        soma = soma + numero * pesos2[i];
-    }
-
-    resto = soma % 11;
-    int segundoDigito;
-
-    if (resto < 2) {
-        segundoDigito = 0;
-    } else {
-        segundoDigito = 11 - resto;
-    }
-
-    digitoCnpj = cnpj.charAt(13) - '0';
-
-    if (segundoDigito != digitoCnpj) {
-        return false;
-    }
-
-    return true;
-}
 }
 

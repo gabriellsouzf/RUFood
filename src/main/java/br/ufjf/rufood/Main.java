@@ -109,6 +109,16 @@ public class Main {
             return;
         }
 
+        // Remove a pontuacao do CPF
+        cpf = cpf.replace(".", "");
+        cpf = cpf.replace("-", "");
+
+        // Verifica se o CPF ja esta cadastrado
+        if (sistema.cpfCadastrado(cpf) == true) {
+            JOptionPane.showMessageDialog(null, "CPF já cadastrado!");
+            return;
+        }
+
         String senha = JOptionPane.showInputDialog("Digite sua senha:");
 
         if (senha == null) {
@@ -167,6 +177,17 @@ public class Main {
             return;
         }
 
+        // Remove a pontuacao do CNPJ
+        cnpj = cnpj.replace(".", "");
+        cnpj = cnpj.replace("-", "");
+        cnpj = cnpj.replace("/", "");
+
+        // Verifica se o CNPJ ja esta cadastrado
+        if (sistema.cnpjCadastrado(cnpj) == true) {
+            JOptionPane.showMessageDialog(null, "CNPJ já cadastrado!");
+            return;
+        }
+
         String senha = JOptionPane.showInputDialog("Digite a senha:");
 
         if (senha == null) {
@@ -222,6 +243,16 @@ public class Main {
 
         if (validarCpf(cpf) == false) {
             JOptionPane.showMessageDialog(null, "CPF inválido!");
+            return;
+        }
+
+        // Remove a pontuacao do CPF
+        cpf = cpf.replace(".", "");
+        cpf = cpf.replace("-", "");
+
+        // Verifica se o CPF ja esta cadastrado
+        if (sistema.cpfCadastrado(cpf) == true) {
+            JOptionPane.showMessageDialog(null, "CPF já cadastrado!");
             return;
         }
 

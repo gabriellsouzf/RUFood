@@ -36,6 +36,7 @@ public class Main {
         JButton botaoCliente = new JButton("Cliente");
         JButton botaoRestaurante = new JButton("Restaurante");
         JButton botaoMotoboy = new JButton("Motoboy");
+        JButton botaoLogin = new JButton("Entrar");
 
         // Criacao do painel
         JPanel painel = new JPanel();
@@ -43,6 +44,7 @@ public class Main {
         painel.add(botaoCliente);
         painel.add(botaoRestaurante);
         painel.add(botaoMotoboy);
+        painel.add(botaoLogin);
 
         janela.add(titulo, "North");
         janela.add(painel, "Center");
@@ -68,6 +70,13 @@ public class Main {
 
             public void actionPerformed(ActionEvent e) {
                 cadastrarMotoboy();
+            }
+        });
+        botaoLogin.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+
+                entrar();
             }
         });
 
@@ -537,6 +546,43 @@ public class Main {
         }
 
         return true;
+    }
+
+    private static void entrar() {
+
+        String email = JOptionPane.showInputDialog("Digite seu e-mail:");
+
+        if (email == null) {
+            return;
+        }
+
+        String senha = JOptionPane.showInputDialog("Digite sua senha:");
+
+        if (senha == null) {
+            return;
+        }
+
+        Usuario usuario = sistema.realizarLogin(email, senha);
+
+        if (usuario == null) {
+            JOptionPane.showMessageDialog(null, "E-mail ou senha incorretos!");
+            return;
+        }
+
+        if (usuario instanceof Cliente) {
+            JOptionPane.showMessageDialog(null,
+                    "Bem-vindo, cliente " + usuario.getNome());
+        }
+
+        if (usuario instanceof Restaurante) {
+            JOptionPane.showMessageDialog(null,
+                    "Bem-vindo, restaurante " + usuario.getNome());
+        }
+
+        if (usuario instanceof Motoboy) {
+            JOptionPane.showMessageDialog(null,
+                    "Bem-vindo, motoboy " + usuario.getNome());
+        }
     }
 }
 

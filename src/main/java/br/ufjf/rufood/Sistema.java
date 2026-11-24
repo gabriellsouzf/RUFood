@@ -72,4 +72,21 @@ public class Sistema {
 
         return false;
     }
+    public Usuario realizarLogin(String email, String senha) {
+
+        for (int i = 0; i < usuarios.size(); i++) {
+
+            Usuario usuario = usuarios.get(i);
+
+            if (usuario.getEmail().equals(email)) {
+
+                if (usuario.getSenha().equals(senha)) {
+
+                    return usuario;
+                }
+            }
+        }
+
+        return null;
+    }
 }
